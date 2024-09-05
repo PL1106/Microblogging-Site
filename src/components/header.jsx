@@ -1,6 +1,4 @@
-import './Header.css';
-
-function Header() {
+export default function Header() {
   return (
     <header className="header">
       <h1>Micro-blogging Site</h1>
@@ -9,4 +7,3 @@ function Header() {
   );
 }
 
-export default Header;
