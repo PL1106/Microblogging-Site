@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from './components/Header';
 import Comment from './components/Comment';
 import './style/header.css';
