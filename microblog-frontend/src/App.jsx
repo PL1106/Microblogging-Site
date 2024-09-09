@@ -5,18 +5,19 @@ import '../src/style/post-button.css'
 
 
 
+
+
 function App() {
   const handlePostClick = () => {
     console.log('Post button clicked');
   };
-
-
 
   return (
     <div>
       <Header />
       <div style={{ padding: '20px', textAlign: 'center' }}>
         <PostButton onClick={handlePostClick} label="Post" />
+       
       </div>
     </div>
   );

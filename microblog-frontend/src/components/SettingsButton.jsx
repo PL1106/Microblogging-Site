@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './style/settings-button.css';
+import '../style/settings-button.css'
 
 const SettingsButton = () => {
   const [isOpen, setIsOpen] = useState(false);
