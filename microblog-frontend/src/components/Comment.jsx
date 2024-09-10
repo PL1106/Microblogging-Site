@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import PostButton from './Postbutton'; 
+import PostButton from './Postbutton';
 import '../style/comment.css';
 
-const Comment = () => {
+const Comment = ({ onPost }) => {
   const [comment, setComment] = useState('');
   const maxWords = 250;
 
@@ -16,8 +16,8 @@ const Comment = () => {
   };
 
   const handlePostClick = () => {
-
-    console.log('Comment posted:', comment);
+    onPost(comment);
+    setComment('');
   };
 
   return (
@@ -29,7 +29,7 @@ const Comment = () => {
         className="comment-box"
       />
       <p className="word-count">{comment.split(/\s+/).filter(word => word.length > 0).length}/{maxWords} words</p>
-      <PostButton onClick={handlePostClick} label="Post" /> {}
+      <PostButton onClick={handlePostClick} label="Post" />
     </div>
   );
 };
