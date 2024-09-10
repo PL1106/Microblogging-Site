@@ -16,8 +16,10 @@ const Comment = ({ onPost }) => {
   };
 
   const handlePostClick = () => {
-    onPost(comment);
-    setComment('');
+    if (comment.trim()) { 
+      onPost(comment);
+      setComment('');
+    }
   };
 
   return (

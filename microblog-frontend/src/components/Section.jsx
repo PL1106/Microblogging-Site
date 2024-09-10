@@ -1,8 +1,9 @@
-import '../style/section.css'; 
+import '../style/section.css';
 
 const Section = ({ comments }) => {
   return (
     <div className="section">
+      <h2>Comments Section</h2> {}
       {comments.length > 0 ? (
         comments.map((comment, index) => (
           <div key={index} className="comment-item">

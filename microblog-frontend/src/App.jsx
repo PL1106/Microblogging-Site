@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Header from './components/header';
 import Comment from './components/Comment';
@@ -5,12 +6,13 @@ import Section from './components/Section';
 import './style/header.css';
 import './style/post-button.css';
 import './style/comment.css';
-import './style/section.css'
+import './style/section.css';
 
 function App() {
   const [comments, setComments] = useState([]);
 
   const handlePostComment = (newComment) => {
+    console.log('Adding comment:', newComment); 
     setComments([...comments, newComment]);
   };
 
