@@ -45,4 +45,22 @@
   .delete-button:hover {
     background: #ff4b4b;
   }
+
+  .name-input {
+    width: 106%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-left: -10px;
+    box-sizing: border-box;
+    background-color: #f9f9f9; 
+  }
+  
+  .name-input::placeholder {
+    color: #999;
+    font-size: 14px;
+  }
   
