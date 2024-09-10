@@ -1,4 +1,4 @@
-import Header from './components/Header';
+import Header from './components/header';
 import Comment from './components/Comment';
 import './style/header.css';
 import './style/post-button.css';
@@ -16,4 +16,3 @@ function App() {
 }
 
 export default App;
-
