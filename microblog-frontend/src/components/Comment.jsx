@@ -16,8 +16,9 @@ const Comment = ({ onPost }) => {
   };
 
   const handlePostClick = () => {
-    if (comment.trim()) { 
-      onPost(comment);
+    if (comment.trim()) {
+      const timestamp = new Date().toLocaleTimeString(); 
+      onPost({ text: comment, time: timestamp });
       setComment('');
     }
   };
