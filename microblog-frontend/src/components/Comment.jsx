@@ -4,6 +4,7 @@ import '../style/comment.css';
 
 const Comment = ({ onPost }) => {
   const [comment, setComment] = useState('');
+  const [name, setName] = useState('');
   const maxWords = 250;
 
   const handleInputChange = (e) => {
@@ -15,16 +16,30 @@ const Comment = ({ onPost }) => {
     }
   };
 
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
   const handlePostClick = () => {
-    if (comment.trim()) {
-      const timestamp = new Date().toLocaleTimeString(); 
-      onPost({ text: comment, time: timestamp });
+    if (comment.trim() && name.trim()) {
+      const timestamp = new Date().toLocaleTimeString();
+      onPost({ text: comment, name, time: timestamp });
       setComment('');
+      setName('');
+    } else {
+      alert('Please enter both name and comment.');
     }
   };
 
   return (
     <div className="comment-section">
+      <input
+        type="text"
+        value={name}
+        onChange={handleNameChange}
+        placeholder="Your name"
+        className="name-input"
+      />
       <textarea
         value={comment}
         onChange={handleInputChange}

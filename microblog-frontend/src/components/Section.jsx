@@ -7,7 +7,7 @@ const Section = ({ comments, onDelete }) => {
       {comments.length > 0 ? (
         comments.map((comment, index) => (
           <div key={index} className="comment-item">
-            <p>{comment.text}</p>
+            <p><strong>{comment.name}:</strong> {comment.text}</p>
             <span className="timestamp">{comment.time}</span>
             <button className="delete-button" onClick={() => onDelete(index)}>Delete</button>
           </div>
