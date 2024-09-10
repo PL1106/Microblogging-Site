@@ -1,0 +1,8 @@
+// In App.jsx
+console.log(comments);
+
+// In Comment.jsx
+console.log('Posting comment:', comment);
+
+// In Section.jsx
+console.log('Received comments:', comments);
