@@ -9,34 +9,55 @@ import './style/section.css';
 
 function App() {
   const [comments, setComments] = useState([]);
+  const [filteredComments, setFilteredComments] = useState([]);
+
 
   useEffect(() => {
-
-    const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
-    setComments(savedComments);
+    const storedComments = JSON.parse(localStorage.getItem('comments'));
+    if (storedComments) {
+      setComments(storedComments);
+      setFilteredComments(storedComments);
+    }
   }, []);
 
-  const handlePostComment = (newComment) => {
+
+  useEffect(() => {
+    localStorage.setItem('comments', JSON.stringify(comments));
+  }, [comments]);
+
+  const handlePost = (newComment) => {
     const updatedComments = [...comments, newComment];
     setComments(updatedComments);
-    localStorage.setItem('comments', JSON.stringify(updatedComments));
+    setFilteredComments(updatedComments);
   };
 
-  const handleDeleteComment = (index) => {
+  const handleDelete = (index) => {
     const updatedComments = comments.filter((_, i) => i !== index);
     setComments(updatedComments);
-    localStorage.setItem('comments', JSON.stringify(updatedComments));
+    setFilteredComments(updatedComments);
+  };
+
+  const handleSearch = (searchTerm) => {
+    if (!searchTerm) {
+      setFilteredComments(comments); 
+      return;
+    }
+
+    const term = searchTerm.toLowerCase();
+    const filtered = comments.filter(
+      (comment) =>
+        comment.text.toLowerCase().includes(term) || comment.name.toLowerCase().includes(term)
+    );
+    setFilteredComments(filtered);
   };
 
   return (
     <div>
-      <Header />
+      <Header onSearch={handleSearch} />
       <div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
-        <Comment onPost={handlePostComment} />
+        <Comment onPost={handlePost} />
       </div>
-      <div>
-        <Section comments={comments} onDelete={handleDeleteComment} />
-      </div>
+      <Section comments={filteredComments} onDelete={handleDelete} />
     </div>
   );
 }

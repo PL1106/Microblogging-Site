@@ -1,3 +1,4 @@
+import React from 'react';
 import '../style/section.css';
 
 const Section = ({ comments, onDelete }) => {
@@ -7,13 +8,15 @@ const Section = ({ comments, onDelete }) => {
       {comments.length > 0 ? (
         comments.map((comment, index) => (
           <div key={index} className="comment-item">
-            <p><strong>{comment.name}:</strong> {comment.text}</p>
+            <p>
+              <strong>{comment.name}:</strong> {comment.text}
+            </p>
             <span className="timestamp">{comment.time}</span>
             <button className="delete-button" onClick={() => onDelete(index)}>Delete</button>
           </div>
         ))
       ) : (
-        <p>No comments yet.</p>
+        <p>No comments found.</p>
       )}
     </div>
   );
