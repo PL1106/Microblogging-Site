@@ -1,5 +1,5 @@
 .post-button {
-    background-color: #00a6ff; 
+    background-color: #3c00ff; 
     border: none;             
     color: white;             
     padding: 12px 24px;       
@@ -14,7 +14,7 @@
   }
   
   .post-button:hover {
-    background-color: #00a6ff; 
+    background-color: #0077ff; 
     
   }
   
