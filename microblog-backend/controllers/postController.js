@@ -1,72 +1,65 @@
-const db = require('../database');
+import dbPromise from '../database.js'; // Adjust the path as necessary
 
-exports.createPost = (req, res) => {
-  const { title, content, author } = req.body;
-  const query = `INSERT INTO posts (title, content, author) VALUES (?, ?, ?)`;
-
-  db.run(query, [title, content, author], function (err) {
-    if (err) {
-      res.status(400).json({ message: 'Error creating post', error: err.message });
-    } else {
-      res.status(201).json({ id: this.lastID, title, content, author });
-    }
-  });
+export const getAllPosts = async (req, res) => {
+  try {
+    const db = await dbPromise;
+    const posts = await db.all('SELECT * FROM posts');
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching posts', error: error.message });
+  }
 };
 
-// Get all posts
-exports.getAllPosts = (req, res) => {
-  const query = `SELECT * FROM posts`;
-
-  db.all(query, [], (err, rows) => {
-    if (err) {
-      res.status(500).json({ message: 'Error fetching posts', error: err.message });
-    } else {
-      res.json(rows);
-    }
-  });
-};
-
-exports.getPostById = (req, res) => {
-  const query = `SELECT * FROM posts WHERE id = ?`;
-
-  db.get(query, [req.params.id], (err, row) => {
-    if (err) {
-      res.status(500).json({ message: 'Error fetching post', error: err.message });
-    } else if (!row) {
+export const getPostById = async (req, res) => {
+  try {
+    const db = await dbPromise;
+    const post = await db.get('SELECT * FROM posts WHERE id = ?', [req.params.id]);
+    if (!post) {
       res.status(404).json({ message: 'Post not found' });
     } else {
-      res.json(row);
+      res.json(post);
     }
-  });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching post', error: error.message });
+  }
 };
 
+export const createPost = async (req, res) => {
+  try {
+    const { title, content, author } = req.body;
+    const db = await dbPromise;
+    const result = await db.run('INSERT INTO posts (title, content, author) VALUES (?, ?, ?)', [title, content, author]);
+    res.status(201).json({ id: result.lastID, title, content, author });
+  } catch (error) {
+    res.status(400).json({ message: 'Error creating post', error: error.message });
+  }
+};
 
-exports.updatePostById = (req, res) => {
-  const { title, content, author } = req.body;
-  const query = `UPDATE posts SET title = ?, content = ?, author = ? WHERE id = ?`;
-
-  db.run(query, [title, content, author, req.params.id], function (err) {
-    if (err) {
-      res.status(400).json({ message: 'Error updating post', error: err.message });
-    } else if (this.changes === 0) {
+export const updatePost = async (req, res) => {
+  try {
+    const { title, content, author } = req.body;
+    const db = await dbPromise;
+    const result = await db.run('UPDATE posts SET title = ?, content = ?, author = ? WHERE id = ?', [title, content, author, req.params.id]);
+    if (result.changes === 0) {
       res.status(404).json({ message: 'Post not found' });
     } else {
       res.json({ id: req.params.id, title, content, author });
     }
-  });
+  } catch (error) {
+    res.status(400).json({ message: 'Error updating post', error: error.message });
+  }
 };
 
-
-exports.deletePostById = (req, res) => {
-  const query = `DELETE FROM posts WHERE id = ?`;
-
-  db.run(query, [req.params.id], function (err) {
-    if (err) {
-      res.status(500).json({ message: 'Error deleting post', error: err.message });
-    } else if (this.changes === 0) {
+export const deletePost = async (req, res) => {
+  try {
+    const db = await dbPromise;
+    const result = await db.run('DELETE FROM posts WHERE id = ?', [req.params.id]);
+    if (result.changes === 0) {
       res.status(404).json({ message: 'Post not found' });
     } else {
       res.json({ message: 'Post deleted successfully' });
     }
-  });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting post', error: error.message });
+  }
 };
